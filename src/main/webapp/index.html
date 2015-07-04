@@ -7,9 +7,9 @@
     <script type="text/javascript">
         (function($) {
             $(document).ready(function() {
-            	var url = "/calculator/calc/add/2/2";
+            	var url = "/rest/calculator/calc/add/2/2";
             	$('<p>').html('Request: ' + url).appendTo('#request');
-            	$.getJSON("/calculator/calc/add/2/2",
+            	$.getJSON(url,
             		function ( data ) {
             			console.log( data );
 		            	$('<p>').html('Raw response: <code>' + JSON.stringify(data) + '</code>').appendTo('#raw');
@@ -62,10 +62,10 @@ basic calculator. The following paths are supported for GET requests:
 </p>
 
 <pre>
-/rest/calc/add/{left}/{right}
-/rest/calc/subtract/{left}/{right}
-/rest/calc/multiply/{left}/{right}
-/rest/calc/divide/{left}/{right}
+/rest/calculator/calc/add/{left}/{right}
+/rest/calculator/calc/subtract/{left}/{right}
+/rest/calculator/calc/multiply/{left}/{right}
+/rest/calculator/calc/divide/{left}/{right}
 </pre>
 
 <p>
@@ -74,7 +74,7 @@ All of these paths return a JSON object containing the supplied parameters and t
 
 In addition the service supports POST requests for:
 <pre>
-/rest/calc2
+/rest/calculator/calc2
 </pre>
 
 <p>

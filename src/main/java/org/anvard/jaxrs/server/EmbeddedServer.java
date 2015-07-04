@@ -1,11 +1,14 @@
 package org.anvard.jaxrs.server;
 
 import java.net.URI;
+import java.net.URL;
+import java.security.ProtectionDomain;
 
 import javax.ws.rs.core.UriBuilder;
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.server.handler.ResourceHandler;
@@ -26,12 +29,20 @@ public final class EmbeddedServer {
 		Server server = JettyHttpContainerFactory.createServer(baseUri, config,
 				false);
 
+		ContextHandler contextHandler = new ContextHandler("/rest");
+		contextHandler.setHandler(server.getHandler());
+		
+		ProtectionDomain protectionDomain = EmbeddedServer.class
+				.getProtectionDomain();
+		URL location = protectionDomain.getCodeSource().getLocation();
+		
 		ResourceHandler resourceHandler = new ResourceHandler();
 		resourceHandler.setWelcomeFiles(new String[] { "index.html" });
-		resourceHandler.setResourceBase(".");
+		resourceHandler.setResourceBase(location.toExternalForm());
+		System.out.println(location.toExternalForm());
 		HandlerCollection handlerCollection = new HandlerCollection();
 		handlerCollection.setHandlers(new Handler[] { resourceHandler,
-				server.getHandler(), new DefaultHandler() });
+				contextHandler, new DefaultHandler() });
 		server.setHandler(handlerCollection);
 		server.start();
 		server.join();

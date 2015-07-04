@@ -22,7 +22,7 @@ public class RestClient {
 
 	public RestClient() {
 		Client client = ClientBuilder.newClient();
-		target = client.target("http://localhost:8680").path("calculator");
+		target = client.target("http://localhost:8680").path("rest").path("calculator");
 	}
 
 	public Calculation calc(String op, int left, int right) {
