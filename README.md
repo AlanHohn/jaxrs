@@ -10,5 +10,10 @@ using Jersey. There's also a useful `EmbeddedServer` class that allows
 the webapp to be run as a standalone Java application. The project 
 can also be built as a WAR using Maven.
 
+This project is similar to (and based on) my [Spring WebMVC][webmvc]
+project.
+
+[webmvc]:https://github.com/AlanHohn/webmvc
+
 
 
