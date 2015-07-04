@@ -1,0 +1,86 @@
+<html>
+  <head>
+  	<title>JAX-RS Calculator Client</title>
+    <link rel="stylesheet" href="js/jquery-ui.css" />
+    <script src="js/jquery-1.9.1.js"></script>    
+    
+    <script type="text/javascript">
+        (function($) {
+            $(document).ready(function() {
+            	var url = "/calculator/calc/add/2/2";
+            	$('<p>').html('Request: ' + url).appendTo('#request');
+            	$.getJSON("/calculator/calc/add/2/2",
+            		function ( data ) {
+            			console.log( data );
+		            	$('<p>').html('Raw response: <code>' + JSON.stringify(data) + '</code>').appendTo('#raw');
+		            	$('<p>').html('Output: ').appendTo('#result');
+            			$('<p>').html('Operation: ' + data.operation).appendTo('#result');
+            			$('<p>').html('<br>Left: ' + data.left).appendTo('#result');
+            			$('<p>').html('<br>Right: ' + data.right).appendTo('#result');
+            			$('<p>').html('<br>Result: ' + data.result).appendTo('#result');
+            		})
+  					.fail(function() {
+    					console.log( "error" );
+					})
+  					.always(function() {
+  						$("#status").text("Status: Complete.");
+	  				});
+            });
+        })(jQuery);
+    </script>
+    <style>
+        ul{
+            list-style-type: none;
+            padding: 10px;
+            background-color: #E0EFAF;      
+        }
+        li{
+            margin: 5px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #FFFFFF;      
+            color: #000000;
+        }
+    </style>
+    
+  </head>
+  <body>
+    <h4>JAX-RS Calculator Client</h4>
+    
+        <div id="content">
+                <ul id="contentList">
+                	<li id="request"></li>
+                    <li id="result"></li>
+                	<li id="raw"></li>
+                    <li><p id="status">Status: Waiting...</p></li>
+                </ul>
+        </div>
+
+<p>
+Welcome to the JAX-RS Example Application. This application provides a REST API for a very
+basic calculator. The following paths are supported for GET requests:
+</p>
+
+<pre>
+/rest/calc/add/{left}/{right}
+/rest/calc/subtract/{left}/{right}
+/rest/calc/multiply/{left}/{right}
+/rest/calc/divide/{left}/{right}
+</pre>
+
+<p>
+All of these paths return a JSON object containing the supplied parameters and the result. 
+</p>
+
+In addition the service supports POST requests for:
+<pre>
+/rest/calc2
+</pre>
+
+<p>
+The request body must be a JSON object similar to the above ("result" is of course optional). The
+response will be JSON as above.
+</p>
+
+</body>
+</html>
